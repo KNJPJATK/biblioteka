@@ -1,6 +1,7 @@
 package pl.rafal;
 
 import pl.rafal.model.Book;
+import pl.rafal.model.BookCatalog;
 import pl.rafal.model.Reader;
 
 public class Main {
@@ -20,7 +21,16 @@ public class Main {
                 "Boj",
                 "290");
 
+        BookCatalog catalog = BookCatalog.getInstance();
+        catalog.addBookToCatalog(book);
+
+        System.out.println(catalog.isBookPresent("Domain Driven Design"));
+
+
         System.out.println(book.borrow(reader));
+        System.out.println(book.borrow(reader2));
+
+        System.out.println(book.returnBook());
         System.out.println(book.borrow(reader2));
 
         System.out.println(book);

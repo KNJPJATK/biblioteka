@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 public class BookTest {
 
     @Test
-    public void test() {
+    public void testIfBrandNewBookIsReadyToBorrow() {
         // Given:
         Book book = new Book(
                 "DDD",
@@ -22,7 +22,7 @@ public class BookTest {
     }
 
     @Test
-    public void test2() {
+    public void testBorrowBookForAReader() {
         // Given:
         Book book = new Book(
                 "DDD",
@@ -40,7 +40,7 @@ public class BookTest {
     }
 
     @Test
-    public void test3() {
+    public void testIfBorrowedBookCannotBeBorrowedAgain() {
         // Given:
         Book book = new Book(
                 "DDD",
@@ -60,7 +60,7 @@ public class BookTest {
     }
 
     @Test
-    public void test4() {
+    public void testIfBorrowedBookCanBeBorrowedAgainForTheSameReader() {
         // Given:
         Book book = new Book(
                 "DDD",
@@ -76,6 +76,57 @@ public class BookTest {
         // Then:
         assertTrue("Ponowne wypożyczenie dla tego samego czytelnika powinno się udać", result);
         assertTrue("Po udanym wypożyczeniu książka powinna być wypożyczona", book.isBorrowed());
+    }
+
+    @Test
+    public void testIfBrandNewBookCannotBeReturned() {
+        // Given:
+        Book book = new Book(
+                "DDD",
+                "E E",
+                "Desc",
+                "ISBN");
+
+        // When:
+        boolean result = book.returnBook();
+
+        // Then:
+        assertFalse("Nowa książka nie może być zwrócona", result);
+    }
+
+    @Test
+    public void testIfBorrowedBookCanBeReturned() {
+        // Given:
+        Book book = new Book(
+                "DDD",
+                "E E",
+                "Desc",
+                "ISBN");
+        book.borrow(new Reader("Konrad", "Walenrod", "33"));
+
+        // When:
+        boolean result = book.returnBook();
+
+        // Then:
+        assertTrue("Wypożyczona książka powinna móc być zwrócona", result);
+    }
+
+    @Test
+    public void testIfReturnedBookCanBeBorrowedAgain() {
+        // Given:
+        Book book = new Book(
+                "DDD",
+                "E E",
+                "Desc",
+                "ISBN");
+        book.borrow(new Reader("Konrad", "Walenrod", "33"));
+        book.returnBook();
+
+        // When:
+        boolean result = book.borrow(new Reader("Konrad", "Mickiewicz", "4"));
+
+        // Then:
+        assertTrue("Oddana książka może byż ponownie wypożyczona", result);
     }
 
 }

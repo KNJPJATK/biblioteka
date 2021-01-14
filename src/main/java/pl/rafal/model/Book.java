@@ -1,5 +1,7 @@
 package pl.rafal.model;
 
+import java.util.Objects;
+
 public class Book {
 
     private final String title;
@@ -42,6 +44,30 @@ public class Book {
         }
         this.borrower = reader;
         return true;
+    }
+
+    public boolean returnBook() {
+        if (! isBorrowed()) {
+            return false;
+        }
+        this.borrower = null;
+        return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return getTitle().equals(book.getTitle()) &&
+                getAuthor().equals(book.getAuthor()) &&
+                Objects.equals(getDescription(), book.getDescription()) &&
+                getIsbn().equals(book.getIsbn());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getIsbn());
     }
 
     @Override
